@@ -1,0 +1,31 @@
+{
+  "development": {
+    "username": "root",
+    "password": "tvUJldyBIxNjbUE8RFmg",
+    "database": "railway",
+    "port": "7357",
+    "host": "containers-us-west-76.railway.app",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "",
+    "database": "database_test",
+    "port": "7357",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "",
+    "port": "7357",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+const db = new Sequelize('railway', 'root', 'tvUJldyBIxNjbUE8RFmg', {
+    host: "containers-us-west-76.railway.app",
+    port: "7357",
+    dialect: "mysql"
+});
