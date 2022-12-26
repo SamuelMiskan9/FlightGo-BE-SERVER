@@ -46,3 +46,17 @@ export const listWishlist = async (req, res) => {
         })
     }
 }
+export const deleteWishlist = async(req, res) => {
+    const { id } = req.params;
+    try {
+        await wishlist.destroy({
+            where: { id },
+        });
+        return res.status(200).json({
+            success: true,
+            message: "Delete wishlist Successfully",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}

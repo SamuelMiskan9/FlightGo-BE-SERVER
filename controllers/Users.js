@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs";
-// import res from "express/lib/response";
 
 export const getRoot = async(req, res) => {
   res.status(200).json({
@@ -111,26 +110,10 @@ export const Whoami = async (req, res) => {
         console.log(error);
     }
 }
-// export const Whoami = async (req, res) => {
-//   try {
-//     const currentUser = req.user;
-//     res.status(200).json(currentUser)
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 //update user
 export const Update = async(req, res,next) => {
-  // const id = req.params.id
-  // const compareId = req.user.userId== id;
-  // if (!compareId ) {
-  //   res.status(401).json({
-  //     status: "FAIL",
-  //     message: "Ini bukan akun kamu"
-  //   });
-  //   return;
-  // }
+
   if(req.files === null) return res.status(400).json({message: "No File Uploaded"});
   const users = await Users.findOne({
     where: {
@@ -152,12 +135,6 @@ export const Update = async(req, res,next) => {
     const fileVisa = req.files.visa;
     const filePassport = req.files.passport;
     const fileIzin = req.files.izin;
-    // if(!file || !fileVisa || !filePassport || !fileIzin){
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "image_user, visa, passport, izin is required",
-    //   });
-    // }
 
     const fileSize = file.data.length;
     const fileSizeVisa = fileVisa.data.length;

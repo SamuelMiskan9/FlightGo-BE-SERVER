@@ -4,7 +4,7 @@ import { verifyToken  } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import {getproduct, getproductById, createproduct, updateproduct, deleteproduct} from"../controllers/Product.js";
 import {cereateTransaction, accept, reject, getTransactionByID, getTransactions, memberHistory, checkIn, NotificationIsAcc, NotificationIsOk, NotificationIsReject} from "../controllers/Transaction.js";
-import { createWishlist, listWishlist } from "../controllers/Wishlist.js";
+import { createWishlist, listWishlist, deleteWishlist } from "../controllers/Wishlist.js";
 const router = express.Router();
 const prefix = "/v1/api/";
 //root
@@ -42,6 +42,7 @@ router.get(prefix + 'ticket/transaction/data/history/member', verifyToken, membe
 //wishlist
 router.post(prefix + 'ticket/wishlist/:id', verifyToken, createWishlist)
 router.get(prefix + 'ticket/wishlist/list', verifyToken, listWishlist)
+router.delete(prefix + 'ticket/wishlist/list/:id', verifyToken, deleteWishlist)
 
 //notification
 router.get(prefix + 'ticket/tansactransaction/notif/menunggu' , verifyToken, NotificationIsOk)
