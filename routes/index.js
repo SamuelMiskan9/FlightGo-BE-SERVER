@@ -2,7 +2,7 @@ import express from "express";
 import { getRoot, getUsers,Register, Login, Logout, Whoami, Update } from "../controllers/Users.js";
 import { verifyToken  } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
-import {getproduct, getproductById, createproduct, updateproduct, deleteproduct} from"../controllers/Product.js";
+import {getproduct, getproductById, createproduct, updateproduct, deleteproduct, categoryDomestic, categoryInternasional} from"../controllers/Product.js";
 import {cereateTransaction, accept, reject, getTransactionByID, getTransactions, memberHistory, checkIn, NotificationIsAcc, NotificationIsOk, NotificationIsReject} from "../controllers/Transaction.js";
 import { createWishlist, listWishlist, deleteWishlist } from "../controllers/Wishlist.js";
 const router = express.Router();
@@ -27,7 +27,8 @@ router.get(prefix + 'ticket/:id', verifyToken, getproductById);
 router.post(prefix + 'ticket', verifyToken, createproduct);
 router.put(prefix + 'ticket/:id', verifyToken, updateproduct);
 router.delete(prefix + 'ticket/:id', verifyToken, deleteproduct);
-
+router.get(prefix + 'ticket/category/domestik', categoryDomestic);
+router.get(prefix + 'ticket/category/internasional', categoryInternasional);
 //transaction
 router.post(prefix + 'ticket/transaction/:id', verifyToken, cereateTransaction); //membuat transaksi
 router.put(prefix + 'ticket/transaction/accept/:id',verifyToken, accept); //admin acc order

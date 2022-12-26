@@ -115,6 +115,32 @@ export const updateproduct = async(req, res) => {
         console.log(error);
     }
 }
+export const categoryDomestic = async(req, res) => {
+    try {
+        const response = await product.findAll({
+            attributes:['id','jenis_penerbangan','bentuk_penerbangan','kota_asal','bandara_asal','kota_tujuan','bandara_tujuan','depature_date','depature_time','kode_negara_asal','kode_negara_tujuan', 'price','kota_asal_','bandara_asal_','kota_tujuan_','bandara_tujuan_','depature_date_','depature_time_','kode_negara_asal_','kode_negara_tujuan_','price_','total_price','image_product','image_product_id','desctiption','createdAt','updatedAt'],
+            where: {
+                jenis_penerbangan: "Domestik".toLowerCase() 
+            },
+        });
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const categoryInternasional = async(req, res) => {
+    try {
+        const response = await product.findAll({
+            attributes:['id','jenis_penerbangan','bentuk_penerbangan','kota_asal','bandara_asal','kota_tujuan','bandara_tujuan','depature_date','depature_time','kode_negara_asal','kode_negara_tujuan', 'price','kota_asal_','bandara_asal_','kota_tujuan_','bandara_tujuan_','depature_date_','depature_time_','kode_negara_asal_','kode_negara_tujuan_','price_','total_price','image_product','image_product_id','desctiption','createdAt','updatedAt'],
+            where: {
+                jenis_penerbangan: "Internasional".toLowerCase()
+            },
+        });
+        res.json(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const deleteproduct = async(req, res) => {
     const { id } = req.params;
