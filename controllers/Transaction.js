@@ -199,3 +199,70 @@ export const memberHistory = async (req, res) => {
         })
     }
 }
+
+export const NotificationIsAcc = async (req, res) => {
+    try {
+        const notifAcc = await transaction.findAll({
+            where: {
+                userId: req.user.userId,
+                status: "Pesanan Diterima",
+            },
+            include: {
+                model: product
+            }
+        })
+        res.status(200).json({
+            message: "Success",
+            notifAcc,
+        });
+    } catch (error) {
+        res.status(400).send({
+            status: "FAIL",
+            message: error.message,
+        })
+    }
+}
+export const NotificationIsReject = async (req, res) => {
+    try {
+        const notifReject = await transaction.findAll({
+            where: {
+                userId: req.user.userId,
+                status: "Pesanan Ditolak",
+            },
+            include: {
+                model: product
+            }
+        })
+        res.status(200).json({
+            message: "Success",
+            notifReject,
+        });
+    } catch (error) {
+        res.status(400).send({
+            status: "FAIL",
+            message: error.message,
+        })
+    }
+}
+export const NotificationIsOk = async (req, res) => {
+    try {
+        const notifOk = await transaction.findAll({
+            where: {
+                userId: req.user.userId,
+                status: "menunggu",
+            },
+            include: {
+                model: product
+            }
+        })
+        res.status(200).json({
+            message: "Success",
+            notifOk,
+        });
+    } catch (error) {
+        res.status(400).send({
+            status: "FAIL",
+            message: error.message,
+        })
+    }
+}

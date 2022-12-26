@@ -3,7 +3,7 @@ import { getRoot, getUsers,Register, Login, Logout, Whoami, Update } from "../co
 import { verifyToken  } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import {getproduct, getproductById, createproduct, updateproduct, deleteproduct} from"../controllers/Product.js";
-import {cereateTransaction, accept, reject, getTransactionByID, getTransactions, memberHistory, checkIn} from "../controllers/Transaction.js";
+import {cereateTransaction, accept, reject, getTransactionByID, getTransactions, memberHistory, checkIn, NotificationIsAcc, NotificationIsOk, NotificationIsReject} from "../controllers/Transaction.js";
 import { createWishlist, listWishlist } from "../controllers/Wishlist.js";
 const router = express.Router();
 const prefix = "/v1/api/";
@@ -43,4 +43,8 @@ router.get(prefix + 'ticket/transaction/data/history/member', verifyToken, membe
 router.post(prefix + 'ticket/wishlist/:id', verifyToken, createWishlist)
 router.get(prefix + 'ticket/wishlist/list', verifyToken, listWishlist)
 
+//notification
+router.get(prefix + 'ticket/tansactransaction/notif/menunggu' , verifyToken, NotificationIsOk)
+router.get(prefix + 'ticket/tansactransaction/notif/diterima' , verifyToken, NotificationIsAcc)
+router.get(prefix + 'ticket/tansactransaction/notif/ditolak' , verifyToken, NotificationIsReject)
 export default router;
