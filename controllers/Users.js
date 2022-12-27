@@ -28,56 +28,56 @@ export const getUsers = async(req, res) => {
 }
 
 export const Register = async(req, res) => {
-    const { email,name, password } = req.body;
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(password, salt);
-    try {
-        await Users.create({
+    const { email,name, password } = req.body;
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
+    try {
+        await Users.create({
             name: name,
-            email: email,
-            password: hashPassword,
+            email: email,
+            password: hashPassword,
             role: "member"
-        });
-        res.json({message: "Register Berhasil"});
-    } catch (error) {
-        console.log(error);
-    }
+        });
+        res.json({message: "Register Berhasil"});
+    } catch (error) {
+        console.log(error);
+    }
 }
- 
+ 
 export const Login = async(req, res) => {
-    try {
-        const user = await Users.findAll({
-            where:{
-                email: req.body.email
-            }
-        });
-        const match = await bcrypt.compare(req.body.password, user[0].password);
-        if(!match) return res.status(400).json({message: "Wrong Password"});
-        const userId = user[0].id;
-        const name = user[0].name;
-        const email = user[0].email;
-        const role = user[0].role;
+    try {
+        const user = await Users.findAll({
+            where:{
+                email: req.body.email
+            }
+        });
+        const match = await bcrypt.compare(req.body.password, user[0].password);
+        if(!match) return res.status(400).json({message: "Wrong Password"});
+        const userId = user[0].id;
+        const name = user[0].name;
+        const email = user[0].email;
+        const role = user[0].role;
         const phone = user[0].phone;
         const address = user[0].address;
         const image_user = user[0].image_user;
         const visa = user[0].visa;
         const passport = user[0].passport;
         const izin = user[0].izin;
-        const accessToken = jwt.sign({userId, name, email, role, phone, address, image_user, visa, passport,izin}, process.env.ACCESS_TOKEN_SECRET,{
-            expiresIn: '1d'
-        });
-        const refreshToken = jwt.sign({userId, name, email, role, phone, address, image_user,visa, passport,izin}, process.env.REFRESH_TOKEN_SECRET,{
-            expiresIn: '183d'
-        });
-        await Users.update({refresh_token: refreshToken},{
-            where:{
-                id: userId
-            }
-        });
-        res.cookie('refreshToken', refreshToken,{
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000
-        });
+        const accessToken = jwt.sign({userId, name, email, role, phone, address, image_user, visa, passport,izin}, process.env.ACCESS_TOKEN_SECRET,{
+            expiresIn: '1d'
+        });
+        const refreshToken = jwt.sign({userId, name, email, role, phone, address, image_user,visa, passport,izin}, process.env.REFRESH_TOKEN_SECRET,{
+            expiresIn: '183d'
+        });
+        await Users.update({refresh_token: refreshToken},{
+            where:{
+                id: userId
+            }
+        });
+        res.cookie('refreshToken', refreshToken,{
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000
+        });
 
         const data = {
             userId,
@@ -93,22 +93,22 @@ export const Login = async(req, res) => {
             message: "Login Successfully",
             data: data,
         });
-    } catch (error) {
-        res.status(404).json({message:"Email tidak ditemukan"});
-    }
+    } catch (error) {
+        res.status(404).json({message:"Email tidak ditemukan"});
+    }
 }
 export const Whoami = async (req, res) => {
-    try {
-        const users = await Users.findOne({
+    try {
+        const users = await Users.findOne({
             where:{
               id: req.user.userId
             },
             attributes:['image_user','name','email', 'role','phone','address','visa','passport','izin']
-        });
-        res.json(users);
-    } catch (error) {
-        console.log(error);
-    }
+        });
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //update user
@@ -202,21 +202,20 @@ export const Update = async(req, res,next) => {
 }
 
 export const Logout = async(req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if(!refreshToken) return res.sendStatus(204);
-    const user = await Users.findAll({
-        where:{
-            refresh_token: refreshToken
-        }
-    });
-    if(!user[0]) return res.sendStatus(204);
-    const userId = user[0].id;
-    await Users.update({refresh_token: null},{
-        where:{
-            id: userId
-        }
-    });
-    res.clearCookie('refreshToken');
-    return res.sendStatus(200);
+    const refreshToken = req.cookies.refreshToken;
+    if(!refreshToken) return res.sendStatus(204);
+    const user = await Users.findAll({
+        where:{
+            refresh_token: refreshToken
+        }
+    });
+    if(!user[0]) return res.sendStatus(204);
+    const userId = user[0].id;
+    await Users.update({refresh_token: null},{
+        where:{
+            id: userId
+        }
+    });
+    res.clearCookie('refreshToken');
+    return res.sendStatus(200);
 }
-

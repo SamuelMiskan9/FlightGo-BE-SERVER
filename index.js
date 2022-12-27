@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(FileUpload());
 app.use(express.static("public"));
 app.use(router);
-//Create table
+// Create table
 // (async () => {
 //     await db.sync();
 // })();
