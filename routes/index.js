@@ -1,5 +1,5 @@
 import express from "express";
-import { getRoot, getUsers,Register, Login, Logout, Whoami, Update } from "../controllers/Users.js";
+import { getRoot, getUsers,getUsersByid,Register, Login, Logout, Whoami, Update } from "../controllers/Users.js";
 import { verifyToken  } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import {getproduct, getproductById, createproduct, updateproduct, deleteproduct} from"../controllers/Product.js";
@@ -18,6 +18,7 @@ router.delete(prefix +'logout', Logout);//logout
 //user
 router.get(prefix + 'token', refreshToken);
 router.get(prefix + 'users', verifyToken, getUsers);
+router.get(prefix + 'users/:id', verifyToken, getUsersByid);
 router.put(prefix + 'users',verifyToken,Update);
 router.get(prefix + 'current-user',verifyToken, Whoami)
 

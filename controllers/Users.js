@@ -26,6 +26,25 @@ export const getUsers = async(req, res) => {
   console.log(error);
   }
 }
+export const getUsersByid = async(req, res) => {
+  if(req.user.role !== "admin") {
+    return res.status(400).json({
+        success: false,
+        message: "Kamu gak bisa mengakses ini dengan role member",
+    });
+  }
+try {
+  const users = await Users.findOne({
+    where: {
+      id: req.params.id
+  },
+    attributes:['id','image_user','name','email', 'role','phone','address','visa','passport','izin','createdAt','updatedAt']
+  });
+  res.json(users);
+} catch (error) {
+console.log(error);
+}
+}
 
 export const Register = async(req, res) => {
     const { email,name, password } = req.body;
