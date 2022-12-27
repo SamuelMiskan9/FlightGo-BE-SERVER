@@ -22,7 +22,7 @@ export const cereateTransaction = async(req, res) => {
             const allowedType = ['.png','.jpg','.jpeg'];
 
             if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({message: "Invalid Images"});
-            if(fileSize > 5000000) return res.status(422).json({message: "Image must be less than 5 MB"});
+            if(fileSize > 1000000) return res.status(422).json({message: "Image must be less than 5 MB"});
 
             file.mv(`./public/images/${fileName}`, async(err)=>{
                 if(err) return res.status(500).json({message: err.message});
@@ -35,6 +35,7 @@ export const cereateTransaction = async(req, res) => {
                     userIzin: req.user.izin,
                     status: "menunggu",
                 })
+                console.log(req.user.role),
                 res.status(201).send({
                     status: 201,
                     message: 'Berhasil Memesan Silahkan menunggu',
@@ -110,6 +111,11 @@ export const reject = async(req, res) => {
  }
  export const checkIn = async (req, res) => {
     try {
+        // const check = await transaction.findOne({
+        //     where: {
+        //         id: req.params.id,
+        //     }
+        // })
         const sourceWishlist = await transaction.findOne({
             where: {
                 userId: req.user.userId,
