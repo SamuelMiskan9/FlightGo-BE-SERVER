@@ -116,6 +116,13 @@ export const reject = async(req, res) => {
                 id: req.params.id,
             }
         })
+        if (!sourceWishlist) {
+            res.status(401).send({
+              status: "FAIL",
+              message: "Anda tidak memiliki produk ini",
+            });
+            return;
+          }
         const checkIn = await sourceWishlist.update({
             checkIn: req.body.checkIn,
         })

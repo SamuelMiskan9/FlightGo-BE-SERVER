@@ -17,7 +17,7 @@ app.use(FileUpload());
 app.use(express.static("public"));
 app.use(router);
 // Create table
-// (async () => {
-//     await db.sync();
-// })();
+(async () => {
+    await db.sync();
+})();
 app.listen(process.env.PORT, ()=> console.log(`server is running`))
