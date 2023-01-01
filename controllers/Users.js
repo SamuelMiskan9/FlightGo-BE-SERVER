@@ -51,6 +51,13 @@ export const Register = async(req, res) => {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
     try {
+        const user = await Users.findOne({ 
+          where: { email: email } 
+        });
+        if (user) {
+          res.status(400).json({ message: "Email sudah terdaftar" });
+          return;
+        } 
         await Users.create({
             name: name,
             email: email,
